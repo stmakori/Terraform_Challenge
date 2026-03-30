@@ -1,0 +1,21 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Local env files
+.env
+.env.*
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

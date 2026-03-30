@@ -1,0 +1,4 @@
+primary_region   = "us-east-1"
+secondary_region = "us-west-2"
+project_name     = "day14-multiregion"
+enable_versioning = true

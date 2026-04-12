@@ -1,0 +1,7 @@
+output "instance_public_ip" {
+  value = aws_instance.web.public_ip
+}
+
+output "alarm_name" {
+  value = aws_cloudwatch_metric_alarm.cpu_alarm.alarm_name
+}

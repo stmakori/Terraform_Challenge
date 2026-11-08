@@ -3,7 +3,8 @@ provider "aws" {
 }
 
 module "webserver_cluster" {
-  source = "github.com/your-username/terraform-aws-webserver-cluster?ref=v0.0.1"
+  # Remote module from this repo, pinned to a git ref. Pin to a release tag (e.g. ?ref=v0.0.1) once tagged.
+  source = "git::https://github.com/stmakori/terraform-aws-challenge.git//day_9/modules/webserver-cluster?ref=main"
 
   cluster_name  = "webservers-production"
   instance_type = "t2.medium"

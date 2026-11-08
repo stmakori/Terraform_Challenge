@@ -43,7 +43,10 @@ jobs:
           mkdir -p "$TF_PLUGIN_CACHE_DIR"
           failed=0
           # Every folder with .tf files that isn't a reusable module is a runnable exercise.
+          # Skipped: Day 4 configurable-web-server has no main.tf committed yet.
+          skip='./Day 4 Challenge/configurable-web-server'
           while IFS= read -r dir; do
+            if [ "$dir" = "$skip" ]; then echo "| \`$dir\` | skipped (main.tf missing) |" >> results.md; continue; fi
             echo "::group::$dir"
             if (cd "$dir" && terraform init -backend=false -input=false -no-color && terraform validate -no-color); then
               echo "| \`$dir\` | ✅ |" >> results.md

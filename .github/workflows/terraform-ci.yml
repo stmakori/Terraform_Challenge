@@ -1,0 +1,57 @@
+name: Terraform CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  TF_IN_AUTOMATION: "1"
+  TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.terraform-plugin-cache
+
+jobs:
+  fmt:
+    name: Format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+      - run: terraform fmt -check -recursive -diff
+
+  validate:
+    name: Validate every exercise
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+          terraform_wrapper: false
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.TF_PLUGIN_CACHE_DIR }}
+          key: tf-plugins-${{ runner.os }}-${{ hashFiles('**/*.tf') }}
+          restore-keys: tf-plugins-${{ runner.os }}-
+      - name: Validate root modules
+        run: |
+          mkdir -p "$TF_PLUGIN_CACHE_DIR"
+          failed=0
+          # Every folder with .tf files that isn't a reusable module is a runnable exercise.
+          while IFS= read -r dir; do
+            echo "::group::$dir"
+            if (cd "$dir" && terraform init -backend=false -input=false -no-color && terraform validate -no-color); then
+              echo "| \`$dir\` | ✅ |" >> results.md
+            else
+              echo "| \`$dir\` | ❌ |" >> results.md
+              failed=1
+            fi
+            echo "::endgroup::"
+          done < <(find . -name '*.tf' -not -path '*/.terraform/*' -not -path '*/modules/*' -printf '%h\n' | sort -u)
+          { echo "| Exercise | Valid |"; echo "|---|---|"; cat results.md; } >> "$GITHUB_STEP_SUMMARY"
+          exit $failed

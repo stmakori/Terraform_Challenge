@@ -14,9 +14,9 @@ resource "aws_security_group" "instance" {
 }
 
 resource "aws_launch_configuration" "example" {
-  name_prefix   = "${var.cluster_name}-lc"
-  image_id      = "ami-0c55b159cbfafe1f0" # Amazon Linux (update if needed)
-  instance_type = var.instance_type
+  name_prefix     = "${var.cluster_name}-lc"
+  image_id        = "ami-0c55b159cbfafe1f0" # Amazon Linux (update if needed)
+  instance_type   = var.instance_type
   security_groups = [aws_security_group.instance.id]
 
   user_data = <<-EOF

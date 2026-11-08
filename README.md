@@ -1,5 +1,8 @@
 # Terraform Challenge (AWS)
 
+[![Terraform CI](https://github.com/stmakori/terraform-aws-challenge/actions/workflows/terraform-ci.yml/badge.svg)](https://github.com/stmakori/terraform-aws-challenge/actions/workflows/terraform-ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0d7356.svg)](LICENSE)
+
 My day-by-day work through a Terraform-on-AWS challenge, from a single EC2 web server to a
 multi-region, highly available stack with remote state, automated tests, CI pipelines and policy
 as code.
@@ -43,6 +46,12 @@ Every folder is a self-contained exercise you can `init`, `plan` and `apply` on 
 | 25 | [`day25-static-website`](day25-static-website) | Static website on S3 as a reusable module with per-environment config |
 | 26 | [`day26-scalable-web-app`](day26-scalable-web-app) | Scalable web app: custom VPC, ALB, ASG with scaling policies, split into modules |
 | 27 | [`day27-multi-region-ha`](day27-multi-region-ha) | Multi-region high availability: VPC, ALB and ASG modules, Route 53 records and a Multi-AZ RDS module |
+
+## Continuous integration
+
+Every push and pull request runs [`terraform-ci.yml`](.github/workflows/terraform-ci.yml): `terraform fmt -check`
+across the repo, then `terraform init -backend=false` and `terraform validate` in every exercise folder.
+The run summary lists each exercise with its result.
 
 ## Running an exercise
 

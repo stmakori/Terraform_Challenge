@@ -42,5 +42,5 @@ resource "aws_autoscaling_group" "this" {
 
   min_size         = 1
   max_size         = 3
-  desired_capacity  = 2
+  desired_capacity = 2
 }

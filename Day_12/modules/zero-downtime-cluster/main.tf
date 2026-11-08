@@ -147,13 +147,13 @@ resource "aws_launch_template" "green" {
 }
 
 resource "aws_autoscaling_group" "blue" {
-  name_prefix          = "${var.cluster_name}-blue-"
-  min_size             = var.min_size
-  max_size             = var.max_size
-  desired_capacity     = var.min_size
-  vpc_zone_identifier  = data.aws_subnets.default.ids
-  target_group_arns    = [aws_lb_target_group.blue.arn]
-  health_check_type    = "ELB"
+  name_prefix           = "${var.cluster_name}-blue-"
+  min_size              = var.min_size
+  max_size              = var.max_size
+  desired_capacity      = var.min_size
+  vpc_zone_identifier   = data.aws_subnets.default.ids
+  target_group_arns     = [aws_lb_target_group.blue.arn]
+  health_check_type     = "ELB"
   protect_from_scale_in = false
 
   launch_template {
@@ -173,13 +173,13 @@ resource "aws_autoscaling_group" "blue" {
 }
 
 resource "aws_autoscaling_group" "green" {
-  name_prefix          = "${var.cluster_name}-green-"
-  min_size             = var.min_size
-  max_size             = var.max_size
-  desired_capacity     = var.min_size
-  vpc_zone_identifier  = data.aws_subnets.default.ids
-  target_group_arns    = [aws_lb_target_group.green.arn]
-  health_check_type    = "ELB"
+  name_prefix           = "${var.cluster_name}-green-"
+  min_size              = var.min_size
+  max_size              = var.max_size
+  desired_capacity      = var.min_size
+  vpc_zone_identifier   = data.aws_subnets.default.ids
+  target_group_arns     = [aws_lb_target_group.green.arn]
+  health_check_type     = "ELB"
   protect_from_scale_in = false
 
   launch_template {

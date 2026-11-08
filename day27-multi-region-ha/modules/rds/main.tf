@@ -5,7 +5,7 @@ resource "aws_db_instance" "this" {
 
   db_name             = "appdb"
   username            = "admin"
-  password            = "Password123!"
+  password            = var.db_password
 
   multi_az            = true
   skip_final_snapshot = true
